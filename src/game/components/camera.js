@@ -7,7 +7,7 @@ export default () => {
 		90,
 		window.innerWidth / window.innerHeight,
 		1,
-		1000
+		10000
 	);
 
 	const lookAt = camera.lookAt;

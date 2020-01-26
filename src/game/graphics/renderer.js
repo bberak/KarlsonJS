@@ -54,13 +54,17 @@ class ThreeView extends PureComponent {
     this.renderer.setSize(width, height);
   };
 
+  onClick = () => {
+    this.refs.container.requestPointerLock();
+  }
+
   render() {
     if (this.composer) {
       this.composer.render();
     } 
 
     return (
-      <div ref={"container"} style={css.container} />
+      <div ref={"container"} style={css.container} onClick={this.onClick} />
     );
   }
 }

@@ -1,32 +1,17 @@
-import { rotateAroundPoint } from "../utils/three";
+import { clamp } from "../utils";
 
 const Camera = ({
-  yawSpeed = 0.01,
-  pitchSpeed = 0.01,
-  zoomSpeed = 0.02
+  yawSpeed = -0.01,
+  pitchSpeed = -0.01
 } = {}) => {
-  return (entities, { keyController }) => {
+  return (entities, { mouseController }) => {
     const camera = entities.camera;
 
-    if (camera && keyController) {
-      const { w, a, s, d, space, control } = keyController;
-
-      //-- Yaw and pitch rotation
-      if (w || a || s || d) {
-        rotateAroundPoint(camera, camera.target, {
-          y: (a ? 1 : d ? -1 : 0) * yawSpeed,
-          x: (w ? 1 : s ? -1 : 0) * pitchSpeed
-        });
-        camera.lookAt(camera.target);
-      }
-      
-      //-- Zooming (pinching)
-      if (space || control) {
-        const zoomFactor = (space ? 1 : control ? -1 : 0) * zoomSpeed;
-
-        camera.zoom += zoomFactor;
-        camera.updateProjectionMatrix();
-      }
+    if (camera && mouseController) {
+      camera.rotation.y += mouseController.movement.x * yawSpeed;
+      camera.rotation.x += mouseController.movement.y * pitchSpeed;
+      camera.rotation.x = clamp(camera.rotation.x, -1.4, 1);
+      camera.updateProjectionMatrix();
     }
 
     return entities;

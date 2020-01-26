@@ -3,6 +3,7 @@ import Camera from "./components/camera";
 import HUD from "./components/hud";
 import Droid from "./components/droid";
 import Skybox from "./components/skybox";
+import Player from "./components/player";
 import { clear } from "./utils/three";
 import * as OIMO from "oimo";
 
@@ -30,17 +31,14 @@ export default async () => {
     scene.add(ambient);
     scene.add(sunlight);
 
-	camera.position.set(0, 2, 6);
-	camera.lookAt(new THREE.Vector3(0, 0, 0));
-
-
 	const entities = {
 		scene,
 		camera,
 		world,
-		droid:  await Droid({ parent: scene, world,  y: 1 }),
+		droid:  await Droid({ parent: scene, world,  y: 0 }),
 		skybox: await Skybox({ parent: scene }),
-		hud: HUD()
+		hud: HUD(),
+		player: Player({ parent: scene, camera, world, height: 2, x: 0, y: 1, z: 5 })
 	}
 
 	return entities;

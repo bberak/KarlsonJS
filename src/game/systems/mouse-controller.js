@@ -31,6 +31,23 @@ const createPositionReader = () => {
   }
 }
 
+const createMovementReader = () => {
+  let neutral = { x: 0, y: 0 };
+
+  return input => {
+    const move = input.find(x => x.name === "onMouseMove");
+
+    if (move) {
+      return {
+        x: move.payload.movementX,
+        y: move.payload.movementY
+      }
+    }
+
+    return neutral;
+  }
+}
+
 const createWheelReader = () => {
   let value = 0;
 
@@ -53,6 +70,7 @@ const middle = createButtonReader([1]);
 const right = createButtonReader([2]);
 const position = createPositionReader();
 const wheel = createWheelReader();
+const movement = createMovementReader();
 
 let previous = { };
 
@@ -66,7 +84,8 @@ const MouseController = (Wrapped = x => x) => (entities, args) => {
         middle: middle(input),
         right: right(input),
         position: position(input),
-        wheel: wheel(input)
+        wheel: wheel(input),
+        movement: movement(input)
       };
 
       args.mouseController = Object.assign({}, current, { previous });

@@ -19,6 +19,8 @@ export default () => {
 		camera.target = vec;
 	};
 
+	camera.rotation.order = "YXZ";
+
 	camera.timelines = {};
 
 	camera.shake = (duration = 400) => {

@@ -2,7 +2,8 @@ import React from "react";
 import { GameEngine } from "react-game-engine";
 import Renderer from "./graphics/renderer";
 import Systems from "./systems";
-import Entities from "./entities";
+import Loader from "./levels/loader";
+import Level1 from "./levels/level-01";
 import "../index.css";
 
 class Game extends React.Component {
@@ -11,7 +12,7 @@ class Game extends React.Component {
       <GameEngine
         className="game"
         systems={Systems}
-        entities={Entities()}
+        entities={Loader(Level1)}
         renderer={Renderer()}
       />
     );

@@ -18,20 +18,52 @@ xxxxxxxxxxxx     d xxxxxxxxxx
 xxxxxxxxxxxxxxxxx p  xxxxxxxxxxxxxx
 xxxxxxx       xxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-`
+#
+xxxxxxx
+xxxxxx
+xx
+#
+xxxxxxx
+xxxxxx
+xx
+#
+xxxxxxx
+xxxxxx
+xx
+`;
 
 export default async ({ scene, camera, world }) => {
-
 	const assets = {
-		x: async ({ x, y, z, width, breadth, height }) => await Box(),
-		p: async ({ x, y, z, width, breadth, height }) => await Player(),
-		d: async ({ x, y, z, width, breadth, height }) => await Droid()
-	}
+		x: async ({ x, y, z, width, breadth, height }) =>
+			await Box({
+				parent: scene,
+				world,
+				dynamic: false,
+				x,
+				y,
+				z,
+				width,
+				breadth,
+				height,
+				scale: 1,
+				color: 0x00e6ff
+			})
+		//p: async ({ x, y, z, width, breadth, height }) => await Player(),
+		//d: async ({ x, y, z, width, breadth, height }) => await Droid()
+	};
 
 	return {
 		skybox: await Skybox({ parent: scene }),
-		droid:  await Droid({ parent: scene, world,  y: 0 }),
-		player: Player({ parent: scene, camera, world, height: 2, x: 0, y: 1, z: 5 }),
+		droid: await Droid({ parent: scene, world, y: 0 }),
+		player: Player({
+			parent: scene,
+			camera,
+			world,
+			height: 2,
+			x: 5,
+			y: 5,
+			z: 5
+		}),
 		...Generate({ map, assets })
 	};
 };
